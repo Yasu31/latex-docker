@@ -1,8 +1,8 @@
 # jsk-latex-docker
 Dockerを使ってJSKのlatexテンプレートを使った文章をコンパイルできます。latexを直接インストールしなくてもコンパイルできるようになります。(ci-thesisでのみ確認)
 
-Dockerhub: https://hub.docker.com/repository/docker/yasu31/jsk-latex-docker
-Repository: https://github.com/Yasu31/jsk-latex-docker
+* Dockerhub: https://hub.docker.com/repository/docker/yasu31/jsk-latex-docker
+* Repository: https://github.com/Yasu31/jsk-latex-docker
 
 # ローカルPC上での使い方
 ```bash
