@@ -5,6 +5,7 @@ Dockerを使ってJSKのlatexテンプレートを使った文章をコンパイ
 * Repository: https://github.com/Yasu31/jsk-latex-docker
 
 # ローカルPC上での使い方
+`docker run ...`時にDockerhubからプルしてくれるので、このレポジトリをcloneする必要はないです
 ```bash
 cd /path/to/your-thesis
 docker run --rm -it -v $(pwd):/workdir yasu31/jsk-latex-docker
