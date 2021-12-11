@@ -11,6 +11,17 @@ cd /path/to/your-thesis
 docker run --rm -it -v $(pwd):/workdir yasu31/jsk-latex-docker
 ```
 デフォルトでは`make`を実行しますが、dockerコマンドの最後に`make clean`、`make forever`(ファイルが更新されたら自動コンパイルしてくれる)とかを追加すればそっちが実行されます。
+# GitLab CI上での使い方
+以下の内容でレポジトリのrootに`.gitlab-ci.yml`というファイルを作成します。CIが通ったら、"Download artifacts"で、コンパイルされた結果のPDFをダウンロードすることができます。
+```yaml
+image: yasu31/jsk-latex-docker
+compile-latex:
+  script:
+    - make
+  artifacts:
+    paths:  
+      - main.pdf
+```
 
 # GitHub Actions上での使い方
 GitHubにpushされるたびにGitHub Actions上でコンパイルされ、出力されたPDFをダウンロードすることができます。GitHub Actionsの無料枠には制限があるので注意。無料枠は毎月3000分ですが、自分の場合ci-thesisだと全体の処理に2分程度かかりました。
