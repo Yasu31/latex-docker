@@ -8,9 +8,12 @@ Dockerを使ってJSKのlatexテンプレートを使った文章をコンパイ
 `docker run ...`時にDockerhubからプルしてくれるので、このレポジトリをcloneする必要はないです
 ```bash
 cd /path/to/your-thesis
+# on Linux
 docker run --rm -it -v $(pwd):/workdir yasu31/jsk-latex-docker
+# on Windows
+docker run --rm -it -v ${pwd}:/workdir yasu31/jsk-latex-docker
 ```
-デフォルトでは`make`を実行しますが、dockerコマンドの最後に`make clean`、`make forever`(ファイルが更新されたら自動コンパイルしてくれる)とかを追加すればそっちが実行されます。
+デフォルトでは`make`を実行しますが、コマンドの最後に`make clean`、`pdfcrop hogehoge.pdf`(PDFの余白をクロップしてくれる)とかを追加すればそっちが実行されます。もっと凝ったコマンドを送りたければコマンドの最後に`/bin/bash -c "cd robomech; ls -l"`とすればbashコマンドが送れます。
 # GitLab CI上での使い方
 以下の内容でレポジトリのrootに`.gitlab-ci.yml`というファイルを作成します。CIが通ったら、"Download artifacts"で、コンパイルされた結果のPDFをダウンロードすることができます。
 ```yaml
