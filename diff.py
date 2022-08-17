@@ -18,7 +18,7 @@ pdflatex main
 """
 
 # first copy everything in new/ to /diff (since materials like images can't be diff'ed)
-os.system("cp -r new/ diff/")
+os.system("cp -R new/ diff/")
 
 # find files that end in .tex in the old/ directory
 tex_files = [f for f in os.listdir('old/') if f.endswith('.tex')]
