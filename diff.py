@@ -26,4 +26,4 @@ tex_files = [f for f in os.listdir('old/') if f.endswith('.tex')]
 for tex_file in tex_files:
     # run bash command to generate diff file
     print(f"diffing {tex_file}...")
-    os.system(f'latexdiff old/{tex_file} new/{tex_file} > diff/{tex_file}')
+    os.system(f'latexdiff "old/{tex_file}" "new/{tex_file}" > "diff/{tex_file}"')
