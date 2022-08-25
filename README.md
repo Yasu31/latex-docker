@@ -1,5 +1,5 @@
 # latex-docker
-By using a Docker image, latex documents can be compiled in your local environment (Windows, macOS, or Linux) without needing to install latex locally.
+By using a Docker image, latex documents can be compiled in your local environment (Windows, macOS, or Linux) without needing to install latex locally. This repository does not have to be cloned to use the Docker image.
 
 * Dockerhub: https://hub.docker.com/repository/docker/yasu31/latex-docker
 * Repository: https://github.com/Yasu31/latex-docker
@@ -10,11 +10,10 @@ Get the GUI version (https://docs.docker.com/get-docker/) or the CLI version, wh
 
 # usage
 ## run the docker image
-1. sure the Docker daemon is running 
 1. Open the terminal and navigate to the directory with the latex source files
     ```bash
     # e.g. on Linux, macOS...
-    cd /path/to/latex_source
+    cd /path/to/your_latex_project
     ```
 1. run container
     ```bash
@@ -23,13 +22,15 @@ Get the GUI version (https://docs.docker.com/get-docker/) or the CLI version, wh
     # on Windows
     docker run --rm -it -v ${pwd}:/workdir yasu31/latex-docker
     ```
-    If it tells you "Docker daemon not running", the "Docker Desktop" application will have to be manually started if not set to auto-launch on boot
+    If it tells you "Docker daemon not running", the "Docker Desktop" application will have to be manually started (happens if not set to auto-launch on boot)
 1. once inside the Docker container, compile the latex document
     ```bash
     pdflatex your_main_filename
     ```
 
-note: if your project contains bibtex files, run
+---
+
+tip: if your project contains bibtex files, run
 ```bash
 pdflatex your_main_filename
 bibtex your_main_filename
@@ -37,6 +38,8 @@ pdflatex your_main_filename
 pdflatex your_main_filename
 ```
 to make sure the references are correctly resolved.
+
+---
 
 ## use latexdiff to compare two versions of a document
 1. structure the latex source files as follows:
