@@ -11,4 +11,4 @@ RUN apt-get install -y make gcc imagemagick
 RUN apt-get install -y latexmk
 
 WORKDIR /workdir
-CMD make
+CMD /bin/bash

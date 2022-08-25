@@ -1,53 +1,57 @@
-# jsk-latex-docker
-Dockerを使ってJSKのlatexテンプレートを使った文章をコンパイルできます。latexを直接インストールしなくてもコンパイルできるようになります。(ci-thesisでのみ確認)
+# latex-docker
+By using a Docker image, latex documents can be compiled in your local environment (Windows, macOS, or Linux) without needing to install latex locally.
 
-also includes latexdiff to make submitting revisions easier!
+* Dockerhub: https://hub.docker.com/repository/docker/yasu31/latex-docker
+* Repository: https://github.com/Yasu31/latex-docker
 
-* Dockerhub: https://hub.docker.com/repository/docker/yasu31/jsk-latex-docker
-* Repository: https://github.com/Yasu31/jsk-latex-docker
+# setup
+## install Docker
+Get the GUI version (https://docs.docker.com/get-docker/) or the CLI version, whichever works for you
 
-# ローカルPC上での使い方
-`docker run ...`時にDockerhubからプルしてくれるので、このレポジトリをcloneする必要はないです
+# usage
+## run the docker image
+1. sure the Docker daemon is running 
+1. Open the terminal and navigate to the directory with the latex source files
+    ```bash
+    # e.g. on Linux, macOS...
+    cd /path/to/latex_source
+    ```
+1. run container
+    ```bash
+    # on Linux and macOS
+    docker run --rm -it -v $(pwd):/workdir yasu31/latex-docker
+    # on Windows
+    docker run --rm -it -v ${pwd}:/workdir yasu31/latex-docker
+    ```
+    If it tells you "Docker daemon not running", the "Docker Desktop" application will have to be manually started if not set to auto-launch on boot
+1. once inside the Docker container, compile the latex document
+    ```bash
+    pdflatex your_main_filename
+    ```
+
+note: if your project contains bibtex files, run
 ```bash
-cd /path/to/your-thesis
-# on Linux
-docker run --rm -it -v $(pwd):/workdir yasu31/jsk-latex-docker
-# on Windows
-docker run --rm -it -v ${pwd}:/workdir yasu31/jsk-latex-docker
+pdflatex your_main_filename
+bibtex your_main_filename
+pdflatex your_main_filename
+pdflatex your_main_filename
 ```
-デフォルトでは`make`を実行しますが、コマンドの最後に`make clean`、`pdfcrop hogehoge.pdf`(PDFの余白をクロップしてくれる)とかを追加すればそっちが実行されます。もっと凝ったコマンドを送りたければコマンドの最後に`/bin/bash -c "cd robomech; ls -l"`とすればbashコマンドが送れます。
-# GitLab CI上での使い方
-以下の内容でレポジトリのrootに`.gitlab-ci.yml`というファイルを作成します。CIが通ったら、"Download artifacts"で、コンパイルされた結果のPDFをダウンロードすることができます。
-```yaml
-image: yasu31/jsk-latex-docker
-compile-latex:
-  script:
-    - make
-  artifacts:
-    paths:  
-      - main.pdf
-```
+to make sure the references are correctly resolved.
 
-# GitHub Actions上での使い方
-GitHubにpushされるたびにGitHub Actions上でコンパイルされ、出力されたPDFをダウンロードすることができます。GitHub Actionsの無料枠には制限があるので注意。無料枠は毎月3000分ですが、自分の場合ci-thesisだと全体の処理に2分程度かかりました。
-
-レポジトリのrootに`.github/workflows/compile_pdf.yml`というファイルを作成し、以下をコピペしてpushすれば動いてくれるはずです
-```yaml
-on: [push]
-
-jobs:
-  compile-pdf:
-    runs-on: ubuntu-latest
-    container:
-      image: yasu31/jsk-latex-docker
-    steps:
-    - name: Set up Git repository
-      uses: actions/checkout@v1
-    - name: Compile LaTeX document
-      run: make
-    - name: Upload PDF to workflow tab
-      uses: actions/upload-artifact@v2
-      with:
-        name: PDF
-        path: main.pdf
-```
+## use latexdiff to compare two versions of a document
+1. structure the latex source files as follows:
+    ```
+    your_project
+    |- old/
+    |   `- [source files for the old version]
+    |- new/
+    |   `- [source files for the new version]
+    `- diff/
+        `- [leave it empty]
+    ```
+1. go to this directory in the terminal and run Docker
+1. generate the diff files
+    ```bash
+    python3 generate_diff.py
+    ```
+1. navigate to the diff/ directory and compile the generated latex document as you would a normal latex document

@@ -6,7 +6,7 @@ a convenience script to easily generate latexdiffs for projects with multiple te
 how to use:
 1. copy the old version to old/, and the new version to new/
 2. install latex, or use the docker image to enter latex-enabled environment
-  `docker run --rm -it -v $(pwd):/workdir yasu31/jsk-latex-docker /bin/bash`
+  `docker run --rm -it -v $(pwd):/workdir yasu31/latex-docker
 3. run this script
 4. go to the diff/ folder, and compile PDF:
 ```
