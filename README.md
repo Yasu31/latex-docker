@@ -41,6 +41,14 @@ to make sure the references are correctly resolved.
 
 ---
 
+## crop whitespace around pdf
+Go to the directory of the PDF in terminal (e.g. in Windows, right click within folder and "Open in Terminal")
+```bash
+pdfcrop my_pdf_file.pdf
+# to overwrite input PDF
+pdfcrop my_pdf_file.pdf my_pdf_file.pdf
+```
+
 ## use latexdiff to compare two versions of a document
 1. structure the latex source files as follows:
     ```
